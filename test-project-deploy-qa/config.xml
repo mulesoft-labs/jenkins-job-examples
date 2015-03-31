@@ -1,0 +1,45 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<project>
+  <actions/>
+  <description></description>
+  <keepDependencies>false</keepDependencies>
+  <properties/>
+  <scm class="hudson.scm.NullSCM"/>
+  <canRoam>true</canRoam>
+  <disabled>false</disabled>
+  <blockBuildWhenDownstreamBuilding>false</blockBuildWhenDownstreamBuilding>
+  <blockBuildWhenUpstreamBuilding>false</blockBuildWhenUpstreamBuilding>
+  <triggers/>
+  <concurrentBuild>false</concurrentBuild>
+  <builders>
+    <hudson.plugins.copyartifact.CopyArtifact plugin="copyartifact@1.35">
+      <project>test-project-release-maven</project>
+      <filter>**/target/*.zip</filter>
+      <target></target>
+      <excludes></excludes>
+      <selector class="hudson.plugins.copyartifact.SpecificBuildSelector">
+        <buildNumber>$ARTEFACT_BUILD_NUMBER</buildNumber>
+      </selector>
+      <doNotFingerprintArtifacts>true</doNotFingerprintArtifacts>
+    </hudson.plugins.copyartifact.CopyArtifact>
+    <org.jenkinsci.plugins.mulemmc.MMCDeployerBuilder plugin="mule-mmc@2.0-SNAPSHOT">
+      <mmcUrl>http://localhost:8585/mmc-3.6.0/api</mmcUrl>
+      <user>admin</user>
+      <password>admin</password>
+      <fileLocation>**/target/*.zip</fileLocation>
+      <artifactVersion>$RELEASE_POM_VERSION</artifactVersion>
+      <artifactName>$POM_ARTIFACTID</artifactName>
+      <clusterDeploy>true</clusterDeploy>
+      <clusterOrServerGroupName>dev</clusterOrServerGroupName>
+      <deployWithPomDetails>true</deployWithPomDetails>
+    </org.jenkinsci.plugins.mulemmc.MMCDeployerBuilder>
+  </builders>
+  <publishers/>
+  <buildWrappers>
+    <hudson.plugins.ws__cleanup.PreBuildCleanup plugin="ws-cleanup@0.25">
+      <deleteDirs>false</deleteDirs>
+      <cleanupParameter></cleanupParameter>
+      <externalDelete></externalDelete>
+    </hudson.plugins.ws__cleanup.PreBuildCleanup>
+  </buildWrappers>
+</project>
