@@ -23,7 +23,7 @@ This should be sufficent to execute the example, however below is some detail on
 #### 1. build step (test-project-build)
 This step will normally be triggered by a code check in i.e frequent.
 
-* Maven Build Job
+* Maven Project
 * Build Other Projects (Manual) - release step
 * Configure git check out youe Mule Project
 	* example  `https://github.com/adamsdavis1976/mule-test.git`
@@ -43,7 +43,7 @@ This step will normally be triggered by a code check in i.e frequent.
 #### 2. release step (test-project-release-maven)
 This step will be trigger by user input. Execution can be limited by role but this is not described here. 
 
-* Maven Build Job 
+* Maven Project 
 * Configure Git plugin 
 	* example `https://github.com/adamsdavis1976/mule-test.git`
 	* Branches to build
@@ -89,7 +89,7 @@ Separate instance of this step can be created for diferent environments. For exa
 
 >QA --> UAT --> Production
 
-* Frestyle project
+* Freestyle Project
 * Delete workspace before build starts
 * Copy artfacts from another project
 	* specific build `$ARTEFACT_BUILD_NUMBER`
