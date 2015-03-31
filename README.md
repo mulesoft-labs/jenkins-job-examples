@@ -18,7 +18,7 @@ Once the jobs are imported , create a build pipeline with the initial job config
 
 Then Git credentials must be configure in `test-project-build` and `test-project-release-maven`. 
 
-This should be sufficent to execute the example, however below is some detail on the provide the examples to help with understanding and customisation.  
+For purposes of derstanding and customisation, additional detail on the examples are below.  
 
 #### 1. build step (test-project-build)
 This step will normally be triggered by a code check in i.e frequent.
