@@ -1,5 +1,5 @@
 #jenkins-job-examples - Mule Build Pipeline
-This project contains example build jobs that can be use in a delivery pipeline for Mule ESB.
+This project contains example build jobs that can be use in a delivery pipeline for Mule ESB. This includes provision for both continuous integration and continuous delivery. 
 
 ### prerequisites
 First set up Jenkins with the following plugins
@@ -21,7 +21,7 @@ Then Git credentials must be configure in `test-project-build` and `test-project
 For purposes of derstanding and customisation, additional detail on the examples are below.  
 
 #### 1. build step (test-project-build)
-This step will normally be triggered by a code check in i.e frequent.
+This step will normally be triggered by a code check-in and can be regarded as the 'continuous integration' phase.
 
 * Maven Project
 * Build Other Projects (Manual) - release step
@@ -41,7 +41,7 @@ This step will normally be triggered by a code check in i.e frequent.
 	* Add parameter - `Pass through Git commit` 
 
 #### 2. release step (test-project-release-maven)
-This step will be trigger by user input. Execution can be limited by role but this is not described here. 
+This step will be trigger by user input. Jenkins permits execution of jobs to be limited by role but this is not described here. 
 
 * Maven Project 
 * Configure Git plugin 
@@ -83,7 +83,7 @@ This step will be trigger by user input. Execution can be limited by role but th
 
 
 #### 3. deploy step (test-project-deploy-qa)
-Again, this step will be trigger by user input. Execution can be limited by role but this is not described here. 
+Again, this step will be trigger by user input. Jenkins permits execution of jobs to be limited by role but this is not described here. This step can be reqgarded as the 'continuous deployment' phase. 
 
 Separate instance of this step can be created for diferent environments. For example 
 
