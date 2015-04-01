@@ -83,7 +83,7 @@ This step will be trigger by user input. Jenkins permits execution of jobs to be
 
 Note: I required a more recent version of the maven release plugin to get the git commits correct. This is included in this [parent pom](https://gist.github.com/adamsdavis1976/4bcb4e16f78d837139c8).
 
-#### 3. deploy step (test-project-deploy-qa)
+#### 3. deploy to mule esb step (test-project-deploy-qa-esb)
 Again, this step will be trigger by user input. Jenkins permits execution of jobs to be limited by role but this is not described here. This step can be reqgarded as the 'continuous deployment' phase. 
 
 Separate instance of this step can be created for diferent environments. For example 
@@ -105,5 +105,17 @@ Separate instance of this step can be created for diferent environments. For exa
 		`**/target/*.zip`
 
 
-	
-	
+#### 4. deploy to cloudhub step (test-project-deploy-qa-cloudhub)
+Again, this step will be trigger by user input. Jenkins permits execution of jobs to be limited by role but this is not described here. This step can be reqgarded as the 'continuous deployment' phase. 
+
+As above, separate instance of this step can be created for diferent environments. 
+
+* Freestyle Project
+* Delete workspace before build starts
+* Copy artfacts from another project
+	* specific build `$ARTEFACT_BUILD_NUMBER`
+	* artifacts to copy `**/target/*.zip`
+* Deploy to Cloudhub via `org.mule.tools.maven:cloudhub-maven-plugin` called as a standalone command
+
+		mvn org.mule.tools.maven:cloudhub-maven-plugin:undeploy -Dcloudhub.username=username -Dcloudhub.password=password -Dcloudhub.domain=testdomain 
+		mvn org.mule.tools.maven:cloudhub-maven-plugin:deploy -Dcloudhub.username=username -Dcloudhub.password=password -Dcloudhub.domain=testdomain -Dapplication=application.zip -Dcloudhub.muleVersion=3.6.0
