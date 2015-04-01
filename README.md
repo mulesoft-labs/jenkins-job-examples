@@ -81,6 +81,7 @@ This step will be trigger by user input. Jenkins permits execution of jobs to be
 			
 					version.properties
 
+Note: I required a more recent version of the maven release plugin to get the git commits correct. This is included in this [parent pom](https://gist.github.com/adamsdavis1976/4bcb4e16f78d837139c8).
 
 #### 3. deploy step (test-project-deploy-qa)
 Again, this step will be trigger by user input. Jenkins permits execution of jobs to be limited by role but this is not described here. This step can be reqgarded as the 'continuous deployment' phase. 
