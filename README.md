@@ -32,7 +32,7 @@ This step will normally be triggered by a code check-in and can be regarded as t
 		* Junit 
 		* Munit 
 		* External End to end tests 
-			* Note:  this [Gist](https://gist.github.com/adamsdavis1976/4bcb4e16f78d837139c8) contains a parent pom that can be used to help deploy (via MMC) and test via SOAPUI.  
+			* Note:  this [Gist](https://gist.github.com/adamsdavis1976/4bcb4e16f78d837139c8) contains a parent pom that can be used to help deploy (via MMC) and test via SOAPUI. The example mule project about contains this parent pom.   
 		* Example maven build phases to execute 
 			
 					mvn clean deploy 
