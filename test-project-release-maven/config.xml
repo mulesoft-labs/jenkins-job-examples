@@ -75,7 +75,7 @@ POM_ARTIFACTID=$POM_ARTIFACTID</properties>
           <onlyExactRuns>false</onlyExactRuns>
         </hudson.plugins.parameterizedtrigger.FileBuildParameters>
       </configs>
-      <downstreamProjectNames>test-project-deploy-qa</downstreamProjectNames>
+      <downstreamProjectNames>test-project-deploy-qa-esb,test-project-deploy-qa-cloudhub</downstreamProjectNames>
     </au.com.centrumsystems.hudson.plugin.buildpipeline.trigger.BuildPipelineTrigger>
   </publishers>
   <buildWrappers/>

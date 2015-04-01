@@ -1,0 +1,41 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<project>
+  <actions/>
+  <description></description>
+  <keepDependencies>false</keepDependencies>
+  <properties/>
+  <scm class="hudson.scm.NullSCM"/>
+  <canRoam>true</canRoam>
+  <disabled>false</disabled>
+  <blockBuildWhenDownstreamBuilding>false</blockBuildWhenDownstreamBuilding>
+  <blockBuildWhenUpstreamBuilding>false</blockBuildWhenUpstreamBuilding>
+  <triggers/>
+  <concurrentBuild>false</concurrentBuild>
+  <builders>
+    <hudson.plugins.copyartifact.CopyArtifact plugin="copyartifact@1.35">
+      <project>test-project-release-maven</project>
+      <filter>**/target/*.zip</filter>
+      <target></target>
+      <excludes></excludes>
+      <selector class="hudson.plugins.copyartifact.SpecificBuildSelector">
+        <buildNumber>$ARTEFACT_BUILD_NUMBER</buildNumber>
+      </selector>
+      <doNotFingerprintArtifacts>true</doNotFingerprintArtifacts>
+    </hudson.plugins.copyartifact.CopyArtifact>
+    <hudson.tasks.Shell>
+      <command>mvn org.mule.tools.maven:cloudhub-maven-plugin:deploy -Dcloudhub.username=&lt;user&gt; -Dcloudhub.password=&lt;password&gt; -Dcloudhub.domain=testdomain -Dapplication=test-mule/target/$POM_ARTIFACTID-$RELEASE_POM_VERSION.zip -Dcloudhub.muleVersion=3.6.0
+mvn org.mule.tools.maven:cloudhub-maven-plugin:undeploy -Dcloudhub.username=&lt;user&gt; -Dcloudhub.password=&lt;password&gt; -Dcloudhub.domain=testdomain 
+
+
+</command>
+    </hudson.tasks.Shell>
+  </builders>
+  <publishers/>
+  <buildWrappers>
+    <hudson.plugins.ws__cleanup.PreBuildCleanup plugin="ws-cleanup@0.25">
+      <deleteDirs>false</deleteDirs>
+      <cleanupParameter></cleanupParameter>
+      <externalDelete></externalDelete>
+    </hudson.plugins.ws__cleanup.PreBuildCleanup>
+  </buildWrappers>
+</project>
