@@ -5,7 +5,7 @@ This project contains example build jobs that can be use in a delivery pipeline 
 First set up Jenkins with the following plugins
  
 * install [Jenkins Build Pipline Plugin](https://wiki.jenkins-ci.org/display/JENKINS/Build+Pipeline+Plugin)
-* build/install [Jenkins MMC Plugin](https://github.com/adamsdavis1976/jenkins-mmc-plugin)
+* build/install [Jenkins MMC Plugin](https://github.com/adamsdavis1976/jenkins-mmc-plugin) (todo: submit plugin for Jenkins hosting)
 * install [Copy Artifact Plugin](https://wiki.jenkins-ci.org/display/JENKINS/Copy+Artifact+Plugin)
 * install [Workspace Cleanup Plugin](https://wiki.jenkins-ci.org/display/JENKINS/Workspace+Cleanup+Plugin)
 
