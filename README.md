@@ -68,7 +68,7 @@ This step will be trigger by user input. Jenkins permits execution of jobs to be
 	
 	* Archive the artifact
 		* File to archive 
-			* `**/target/*.zip`
+				`**/target/*.zip`
 			
 	* Build other Projects (manual step) 
 		* nominate the deploy phase of choice
@@ -120,4 +120,5 @@ As above, separate instance of this step can be created for diferent environment
 		mvn org.mule.tools.maven:cloudhub-maven-plugin:undeploy -Dcloudhub.username=username -Dcloudhub.password=password -Dcloudhub.domain=testdomain 
 		mvn org.mule.tools.maven:cloudhub-maven-plugin:deploy -Dcloudhub.username=username -Dcloudhub.password=password -Dcloudhub.domain=testdomain -Dapplication=application.zip -Dcloudhub.muleVersion=3.6.0
 		
-Note: `cloudhub-maven-plugin` is available in maven central so no special configuration should be required for settings.xml
+Note1: `cloudhub-maven-plugin` is available in maven central so no special configuration should be required for settings.xml.
+Note2: `cloudhub.username` and `cloudhub.password` can be placed in settings.xml (and encrypted) if necessary.
