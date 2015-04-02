@@ -21,6 +21,7 @@
     <submoduleCfg class="list"/>
     <extensions/>
   </scm>
+  <quietPeriod>120</quietPeriod>
   <canRoam>true</canRoam>
   <disabled>false</disabled>
   <blockBuildWhenDownstreamBuilding>false</blockBuildWhenDownstreamBuilding>
@@ -32,7 +33,7 @@
     <artifactId>test-mule</artifactId>
   </rootModule>
   <rootPOM>test-mule/pom.xml</rootPOM>
-  <goals>clean verify -P ci</goals>
+  <goals>com.github.redfish4ktc.soapui:maven-soapui-extension-plugin:test -P ch-qa</goals>
   <aggregatorStyleBuild>true</aggregatorStyleBuild>
   <incrementalBuild>false</incrementalBuild>
   <ignoreUpstremChanges>false</ignoreUpstremChanges>
@@ -51,14 +52,16 @@
   <globalSettings class="jenkins.mvn.DefaultGlobalSettingsProvider"/>
   <reporters/>
   <publishers>
-    <au.com.centrumsystems.hudson.plugin.buildpipeline.trigger.BuildPipelineTrigger plugin="build-pipeline-plugin@1.4.7">
+    <hudson.plugins.parameterizedtrigger.BuildTrigger plugin="parameterized-trigger@2.26">
       <configs>
-        <hudson.plugins.git.GitRevisionBuildParameters plugin="git@2.3.5">
-          <combineQueuedCommits>false</combineQueuedCommits>
-        </hudson.plugins.git.GitRevisionBuildParameters>
+        <hudson.plugins.parameterizedtrigger.BuildTriggerConfig>
+          <configs class="empty-list"/>
+          <projects>test-project-undeploy-qa-cloudhub</projects>
+          <condition>ALWAYS</condition>
+          <triggerWithNoParameters>true</triggerWithNoParameters>
+        </hudson.plugins.parameterizedtrigger.BuildTriggerConfig>
       </configs>
-      <downstreamProjectNames>test-project-release-maven</downstreamProjectNames>
-    </au.com.centrumsystems.hudson.plugin.buildpipeline.trigger.BuildPipelineTrigger>
+    </hudson.plugins.parameterizedtrigger.BuildTrigger>
   </publishers>
   <buildWrappers/>
   <prebuilders/>

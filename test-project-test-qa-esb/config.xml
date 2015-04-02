@@ -32,7 +32,7 @@
     <artifactId>test-mule</artifactId>
   </rootModule>
   <rootPOM>test-mule/pom.xml</rootPOM>
-  <goals>clean verify -P ci</goals>
+  <goals>com.github.redfish4ktc.soapui:maven-soapui-extension-plugin:test -P esb-qa</goals>
   <aggregatorStyleBuild>true</aggregatorStyleBuild>
   <incrementalBuild>false</incrementalBuild>
   <ignoreUpstremChanges>false</ignoreUpstremChanges>
@@ -50,16 +50,7 @@
   </settings>
   <globalSettings class="jenkins.mvn.DefaultGlobalSettingsProvider"/>
   <reporters/>
-  <publishers>
-    <au.com.centrumsystems.hudson.plugin.buildpipeline.trigger.BuildPipelineTrigger plugin="build-pipeline-plugin@1.4.7">
-      <configs>
-        <hudson.plugins.git.GitRevisionBuildParameters plugin="git@2.3.5">
-          <combineQueuedCommits>false</combineQueuedCommits>
-        </hudson.plugins.git.GitRevisionBuildParameters>
-      </configs>
-      <downstreamProjectNames>test-project-release-maven</downstreamProjectNames>
-    </au.com.centrumsystems.hudson.plugin.buildpipeline.trigger.BuildPipelineTrigger>
-  </publishers>
+  <publishers/>
   <buildWrappers/>
   <prebuilders/>
   <postbuilders/>

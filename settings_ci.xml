@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<settings xmlns="http://maven.apache.org/SETTINGS/1.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/SETTINGS/1.0.0 http://maven.apache.org/xsd/settings-1.0.0.xsd">
+	<servers>
+		<server>
+			<id>mule-ee-releases</id>
+			<username>name</username>
+			<password>password</password>
+		</server>
+	</servers>
+	<profiles>
+		<profile>
+			<id>ci</id>
+			<activation>
+				<activeByDefault>false</activeByDefault>
+			</activation>
+			<properties>
+				<!--controls execution of all Intergation Test phases defined in Parent POM profile-->
+				<!-- set "esb", "cloudhub" to active the approprate profile -->
+				<integration.tests>esb</integration.tests>
+					
+				<!--fine grained control over what is executed-->
+				<skip.soapui.test>false</skip.soapui.test>
+				<skip.deploy.nexus>false</skip.deploy.nexus>
+				
+				<!--SOAP UI configuration -->
+				<soapui.projectFile>src/test/resources/integtests/soapui-project.xml</soapui.projectFile>
+				<soapui.endpoint.hostname>localhost</soapui.endpoint.hostname>
+				<soapui.endpoint.port>8081</soapui.endpoint.port>
+				<soapui.endpoint.username/>
+				<soapui.endpoint.password/>
+				
+				<!--mmc deployment configuration-->
+				<!--note: currently maven mmc plugin does not support clusters-->
+				<mmc.app.dir>${project.basedir}/src/main/app</mmc.app.dir>
+				<mmc.url>http://localhost:8585/mmc-3.6.0/api</mmc.url>
+				<mmc.username>admin</mmc.username>
+				<mmc.password>admin</mmc.password>
+				<mmc.serverGroup>ci</mmc.serverGroup>
+			
+				
+			</properties>
+		</profile>
+		<profile>
+			<id>ch-qa</id>
+			<activation>
+				<activeByDefault>false</activeByDefault>
+			</activation>
+			<properties>
+				<!--controls execution of all Intergation Test phases defined in Parent POM profile-->
+				<!-- set "esb", "cloudhub" to active the approprate profile -->
+				<integration.tests>cloudhub</integration.tests>
+					
+				<!--fine grained control over what is executed-->
+				<skip.soapui.test>false</skip.soapui.test>
+				<skip.deploy.nexus>false</skip.deploy.nexus>
+				
+				<!--SOAP UI configuration -->
+				<soapui.projectFile>src/test/resources/integtests/soapui-project.xml</soapui.projectFile>
+				<soapui.endpoint.hostname>testdomain.cloudhub.io</soapui.endpoint.hostname>
+				<soapui.endpoint.port>80</soapui.endpoint.port>
+				<soapui.endpoint.username/>
+				<soapui.endpoint.password/>
+				
+				<!--cloudhib deploy configuration-->
+				<cloudhub.username>name</cloudhub.username>
+				<cloudhub.password>password</cloudhub.password>
+				<cloudhub.domain>testdomain</cloudhub.domain>
+				
+			</properties>
+		</profile>
+		<profile>
+			<id>esb-qa</id>
+			<activation>
+				<activeByDefault>false</activeByDefault>
+			</activation>
+			<properties>
+				<!--controls execution of all Intergation Test phases defined in Parent POM profile-->
+				<!-- set "esb", "cloudhub" to active the approprate profile -->
+				<integration.tests>esb</integration.tests>
+					
+				<!--fine grained control over what is executed-->
+				<skip.soapui.test>false</skip.soapui.test>
+				<skip.deploy.nexus>false</skip.deploy.nexus>
+				
+				<!--SOAP UI configuration -->
+				<soapui.projectFile>src/test/resources/integtests/soapui-project.xml</soapui.projectFile>
+				<soapui.endpoint.hostname>localhost</soapui.endpoint.hostname>
+				<soapui.endpoint.port>8082</soapui.endpoint.port>
+				<soapui.endpoint.username/>
+				<soapui.endpoint.password/>
+				
+				<!--mmc deployment configuration-->
+				<!--note: currently maven mmc plugin does not support clusters-->
+				<mmc.app.dir>${project.basedir}/src/main/app</mmc.app.dir>
+				<mmc.url>http://localhost:8585/mmc-3.6.0/api</mmc.url>
+				<mmc.username>admin</mmc.username>
+				<mmc.password>admin</mmc.password>
+				<mmc.serverGroup>qa</mmc.serverGroup>
+				
+				
+			</properties>
+		</profile>
+	</profiles>
+</settings>
