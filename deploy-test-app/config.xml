@@ -1,0 +1,112 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<project>
+  <actions/>
+  <description></description>
+  <keepDependencies>false</keepDependencies>
+  <properties>
+    <hudson.model.ParametersDefinitionProperty>
+      <parameterDefinitions>
+        <jp.ikedam.jenkins.plugins.extensible__choice__parameter.ExtensibleChoiceParameterDefinition plugin="extensible-choice-parameter@1.3.1">
+          <name>MAVEN_COORDINATE</name>
+          <description></description>
+          <editable>false</editable>
+          <choiceListProvider class="jp.ikedam.jenkins.plugins.extensible_choice_parameter.SystemGroovyChoiceListProvider">
+            <scriptText>def list = getList()
+
+
+
+def getList(){
+
+	def groupId = &quot;org.mule.tools&quot;
+	def artifactId = &quot;studio-maven-plugin&quot;
+        def repo = &quot;public&quot;
+        def username = &quot;adam.davis&quot;
+        def password = &quot;Password99&quot;
+        def address = &quot;https://repository.mulesoft.org/nexus&quot;
+        def packaging = &quot;maven-plugin&quot; //should be &apos;mule&apos; for a mule app
+
+
+	def list = [ ]
+	def authString = (username+&quot;:&quot;+password).getBytes().encodeBase64().toString()
+	def conn = (address+&quot;/service/local/data_index/repositories/&quot;+repo+&quot;/content?g=&quot;+groupId +&quot;&amp;a=&quot;+artifactId +&quot;&amp;p=&quot;+packaging).toURL().openConnection()
+	
+        conn.setRequestProperty(&quot;Authorization&quot;, &quot;Basic ${authString}&quot;)
+
+	InputStream is = conn.getInputStream()
+	InputStreamReader isr = new InputStreamReader(is)
+
+	int numCharsRead;
+	char[] charArray = new char[1024];
+	StringBuffer sb = new StringBuffer();
+	while ((numCharsRead = isr.read(charArray)) &gt; 0) {
+		sb.append(charArray, 0, numCharsRead);
+	}
+			
+	new XmlParser().parseText( sb.toString()  ).data.artifact.each {
+  			list.add(&quot;${it.groupId.text()}:${it.artifactId.text()}:${it.version.text()}&quot;) 
+	}
+	return list
+}
+</scriptText>
+            <usePredefinedVariables>false</usePredefinedVariables>
+          </choiceListProvider>
+        </jp.ikedam.jenkins.plugins.extensible__choice__parameter.ExtensibleChoiceParameterDefinition>
+      </parameterDefinitions>
+    </hudson.model.ParametersDefinitionProperty>
+  </properties>
+  <scm class="hudson.scm.NullSCM"/>
+  <canRoam>true</canRoam>
+  <disabled>false</disabled>
+  <blockBuildWhenDownstreamBuilding>false</blockBuildWhenDownstreamBuilding>
+  <blockBuildWhenUpstreamBuilding>false</blockBuildWhenUpstreamBuilding>
+  <triggers/>
+  <concurrentBuild>false</concurrentBuild>
+  <builders>
+    <hudson.tasks.Shell>
+      <command>currdir=`pwd`
+coordinate=$MAVEN_COORDINATE
+repo=snapshots
+nexusUrl=http://dkaims0001:8081/nexus/service/local/artifact/maven/redirect
+fileextension=zip
+
+arr=(${coordinate//:/ })
+
+groupId=${arr[0]}
+artifactName=${arr[1]}
+version=${arr[2]}
+
+rm -rf target
+	
+#get the artifact from nexus 
+wget --user=jenkins_user --password=password -P target/ $nexusUrl&apos;?r=&apos;$repo&apos;&amp;e=&apos;$fileextension&apos;&amp;g=&apos;$groupId&apos;&amp;a=&apos;$artifactName&apos;&amp;v=&apos;$version
+
+echo wget --user=jenkins_user --password=password -P target/ $nexusUrl&apos;?r=&apos;$repo&apos;&amp;e=&apos;$fileextension&apos;&amp;g=&apos;$groupId&apos;&amp;a=&apos;$artifactName&apos;&amp;v=&apos;$version
+
+echo artifactName=$artifactName &gt; envFile
+echo version=$version &gt;&gt; envFile
+
+
+#remove date part for snapshot 
+#mv target/$artifactName-* target/$artifactName-$version.zip
+    </command>
+    </hudson.tasks.Shell>
+    <EnvInjectBuilder plugin="envinject@1.91.1">
+      <info>
+        <propertiesFilePath>envFile</propertiesFilePath>
+      </info>
+    </EnvInjectBuilder>
+    <org.jenkinsci.plugins.mulemmc.MMCDeployerBuilder plugin="mule-mmc@2.0-SNAPSHOT">
+      <mmcUrl>http://localhost:8080/mmc/api</mmcUrl>
+      <user>admin</user>
+      <password>admin</password>
+      <fileLocation>**/*.zip</fileLocation>
+      <artifactVersion>${version}</artifactVersion>
+      <artifactName>${artifactName}</artifactName>
+      <clusterDeploy>true</clusterDeploy>
+      <clusterOrServerGroupName>dev</clusterOrServerGroupName>
+      <deployWithPomDetails>true</deployWithPomDetails>
+    </org.jenkinsci.plugins.mulemmc.MMCDeployerBuilder>
+  </builders>
+  <publishers/>
+  <buildWrappers/>
+</project>
