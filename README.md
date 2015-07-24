@@ -8,6 +8,7 @@ First set up Jenkins with the following plugins
 * build/install [Jenkins MMC Plugin](https://github.com/adamsdavis1976/jenkins-mmc-plugin) (todo: submit plugin for Jenkins hosting)
 * install [Copy Artifact Plugin](https://wiki.jenkins-ci.org/display/JENKINS/Copy+Artifact+Plugin)
 * install [Workspace Cleanup Plugin](https://wiki.jenkins-ci.org/display/JENKINS/Workspace+Cleanup+Plugin)
+* install [Extensible Choice Parameter plugin](https://wiki.jenkins-ci.org/display/JENKINS/Extensible+Choice+Parameter+plugin)
 * place setting_ci.xml in the `~/.m2` directory and add relevent credentials for CH, MMC etc
 * configure 2 mule instances, add them in MMC and label them with servergroups `ci` and `qa` 
 
