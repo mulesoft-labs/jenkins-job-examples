@@ -23,7 +23,9 @@ Then Git credentials must be configure in `test-project-build` and `test-project
 
 For purposes of derstanding and customisation, additional detail on the examples are below.  
 
-#### 1. build step (test-project-build)
+#### Pipeline
+
+##### 1. build step (test-project-build)
 This step will normally be triggered by a code check-in and can be regarded as the 'continuous integration' phase.
 
 * Maven Project
@@ -43,7 +45,7 @@ This step will normally be triggered by a code check-in and can be regarded as t
 * add `Build other projects (Manual Step)` as a post build actions 
 	* Add parameter - `Pass through Git commit` 
 
-#### 2. release step (test-project-release-maven)
+##### 2. release step (test-project-release-maven)
 This step will be trigger by user input. Jenkins permits execution of jobs to be limited by role but this is not described here. 
 
 * Maven Project 
@@ -86,7 +88,7 @@ This step will be trigger by user input. Jenkins permits execution of jobs to be
 
 Note: I required a more recent version of the maven release plugin to get the git commits correct. This is included in this [parent pom](https://gist.github.com/adamsdavis1976/4bcb4e16f78d837139c8).
 
-#### 3. deploy to mule esb step (test-project-deploy-qa-esb)
+##### 3. deploy to mule esb step (test-project-deploy-qa-esb)
 Again, this step will be trigger by user input. Jenkins permits execution of jobs to be limited by role but this is not described here. This step can be reqgarded as the 'continuous deployment' phase. 
 
 Separate instance of this step can be created for diferent environments. For example 
@@ -108,7 +110,7 @@ Separate instance of this step can be created for diferent environments. For exa
 		`**/target/*.zip`
 
 
-#### 4. deploy to cloudhub step (test-project-deploy-qa-cloudhub)
+##### 4. deploy to cloudhub step (test-project-deploy-qa-cloudhub)
 Again, this step will be trigger by user input. Jenkins permits execution of jobs to be limited by role but this is not described here. This step can be reqgarded as the 'continuous deployment' phase. 
 
 As above, separate instance of this step can be created for diferent environments. 
@@ -125,3 +127,9 @@ As above, separate instance of this step can be created for diferent environment
 		
 * Note1: `cloudhub-maven-plugin` is available in maven central so no special configuration should be required for settings.xml.
 * Note2: `cloudhub.username` and `cloudhub.password` can be placed in settings.xml and [encrypted](https://maven.apache.org/guides/mini/guide-encryption.html) if necessary.
+
+#### Standalone Deploy
+
+##### 1. Standalone Deploy from a Nexus Instance (deploy-test-app)
+This Job allows you to select a specific version of an Artefact from a Nexus repository and Deploy it to an MMC instance. This could be extended to provide an environment drop down so as to allow an artefact to be deployed to any environment.
+
